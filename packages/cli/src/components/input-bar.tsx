@@ -119,7 +119,7 @@ export function InputBar({ onSubmit, disabled = false }: Props) {
           backgroundColor="#1A1A24"
           width="100%"
           gap={1}
-        >{true && (
+        >{showCommandMenu && (
             <box
               position="absolute"
               bottom="100%"
