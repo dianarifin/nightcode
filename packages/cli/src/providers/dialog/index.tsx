@@ -101,8 +101,18 @@ export function Dialog({ currentDialog, close }: DialogProps) {
         gap={1}
         onMouseDown={(e) => e.stopPropagation()}
       >
+        <box
+          paddingBottom={1}
+          flexDirection="row"
+          alignItems="center"
+          justifyContent="space-between"
+        >
+          <text attributes={TextAttributes.BOLD}>{title}</text>
+          <text attributes={TextAttributes.DIM} onMouseDown={() => close()}>esc</text>
 
+        </box>
+        <box flexGrow={1}>{children}</box>
       </box>
     </box>
-  )
-}
+  );
+};

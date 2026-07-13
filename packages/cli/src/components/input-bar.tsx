@@ -9,6 +9,7 @@ import type { Command } from "./command-menu/types";
 import { useCommandMenu } from "./command-menu/use-command-menu";
 import { useToast } from "../providers/toast";
 import { useKeyboardLayer } from "../providers/keyboard-layer";
+import { useDialog } from "../providers/dialog";
 
 type Props = {
   onSubmit: (text: string) => void;
@@ -28,6 +29,7 @@ export function InputBar({ onSubmit, disabled = false }: Props) {
   const onSubmitRef = useRef<() => void>(() => { });
   const renderer = useRenderer();
 
+  const dialog = useDialog();
   const toast = useToast();
   const { isTopLayer, setResponder } = useKeyboardLayer();
 
@@ -72,6 +74,7 @@ export function InputBar({ onSubmit, disabled = false }: Props) {
       command.action({
         exit: () => renderer.destroy(),
         toast,
+        dialog,
      })
     } else {
       textarea.insertText(command.value + "");
@@ -164,7 +167,7 @@ export function InputBar({ onSubmit, disabled = false }: Props) {
           <textarea
             ref={textareaRef}
             focused={
-              !disabled && (isTopLayer("base") || isTopLayer("command"))
+              !disabled && (isTopLayer("base") || isTopLayer("command")) // ini perlu karena behavior antara web dan terminal berbeda
             }
             keyBindings={TEXTAREA_KEY_BINDINGS}
             onContentChange={handleTextareaContentChange}
